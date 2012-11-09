@@ -3,8 +3,10 @@
 HEADERS += $$PWD/dircompare.h \
            $$PWD/filecompare.h \
            $$PWD/libxdiff_tools.h \
-           $$PWD/resultitem.h
+           $$PWD/resultitem.h \
+    ../lib/diff_file.h
 
 SOURCES += $$PWD/dircompare.cpp \
            $$PWD/filecompare.cpp \
-           $$PWD/libxdiff_tools.cpp
+           $$PWD/libxdiff_tools.cpp \
+    ../lib/diff_file.cpp
