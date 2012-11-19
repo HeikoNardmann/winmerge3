@@ -2,42 +2,15 @@
 #include <iterator>
 #include <sstream>
 #include <stdexcept>
-#include <stdlib.h>
 
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 
 #include <QFile>
 
+#include "common.h"
 #include "xdiff.h"
 
-int const MmBlockSize = (1024*8);   //from xtestutils.c
-
-void *wrap_malloc(void *priv, unsigned int size)
-{
-    return malloc(size);
-}
-
-void wrap_free(void *priv, void *ptr)
-{
-    free(ptr);
-}
-
-void *wrap_realloc(void *priv, void *ptr, unsigned int size)
-{
-    return realloc(ptr, size);
-}
-
-void libxdiff_tools_init(void)
-{
-    memallocator_t malt;
-
-    malt.priv = NULL;
-    malt.malloc = wrap_malloc;
-    malt.free = wrap_free;
-    malt.realloc = wrap_realloc;
-    xdl_set_allocator(&malt);
-}
 int outf(void*, mmbuffer_t *mmBuf, int mmBufCnt)
 {
     for (int idx = 0; idx < mmBufCnt; ++idx)
@@ -47,16 +20,6 @@ int outf(void*, mmbuffer_t *mmBuf, int mmBufCnt)
     }
     return 0;
 }
-
-class CleanUp
-{
-public:
-    typedef boost::function<void(void)> cleanup_t;
-    CleanUp(cleanup_t const &cleanup) : cleanup_(cleanup) {}
-    ~CleanUp(void) { cleanup_(); }
-private:
-    cleanup_t cleanup_;
-};
 
 int main(int argc, char *argv[])
 {
@@ -114,7 +77,5 @@ int main(int argc, char *argv[])
     {
         std::cerr << "error: " << x.what() << std::endl;
     }
-
     return 0;
 }
-
