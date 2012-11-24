@@ -26,6 +26,7 @@ FORMS = aboutdialog.ui \
 TRANSLATIONS = translations/gui_en_US.ts \
                translations/gui_de_DE.ts \
 
+include($$PWD/../utility/utility.pri)
 include($$PWD/../lib/lib.pri)
 
 HEADERS += aboutdialog.h \
