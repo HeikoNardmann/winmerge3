@@ -4,9 +4,11 @@ HEADERS += $$PWD/dircompare.h \
            $$PWD/filecompare.h \
            $$PWD/libxdiff_tools.h \
            $$PWD/resultitem.h \
-    ../lib/diff_file.h
+    ../lib/differencefile.h \
+    ../lib/differencefilepair.h
 
 SOURCES += $$PWD/dircompare.cpp \
            $$PWD/filecompare.cpp \
            $$PWD/libxdiff_tools.cpp \
-    ../lib/diff_file.cpp
+    ../lib/differencefile.cpp \
+    ../lib/differencefilepair.cpp

@@ -9,15 +9,15 @@
 #include "resultitem.h"
 
 DirCompare::DirCompare(const QString &item1, const QString &item2)
+    : mDir1(new QDir(item1))
+    , mDir2(new QDir(item2))
 {
-    mDir1 = new QDir(item1);
-    mDir2 = new QDir(item2);
+    //complete
 }
 
 DirCompare::~DirCompare()
 {
-    delete mDir1;
-    delete mDir2;
+    //complete
 }
 
 void DirCompare::DoCompare()

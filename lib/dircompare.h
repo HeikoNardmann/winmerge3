@@ -4,10 +4,13 @@
 #include <QList>
 #include "resultitem.h"
 
+#include <boost/scoped_ptr.hpp>
+#include <boost/utility.hpp>
+
 class QString;
 class QDir;
 
-class DirCompare
+class DirCompare : boost::noncopyable
 {
 public:
     DirCompare(const QString &item1, const QString &item2);
@@ -17,8 +20,9 @@ public:
     QList<ResultItem> GetResults() const;
 
 private:
-    QDir *mDir1;
-    QDir *mDir2;
+    typedef boost::scoped_ptr<QDir> qdir_holder_t;
+    qdir_holder_t mDir1;
+    qdir_holder_t mDir2;
     QList<ResultItem> mResults;
 };
 
