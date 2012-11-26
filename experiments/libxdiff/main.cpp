@@ -16,8 +16,11 @@ int outf(void*, mmbuffer_t *mmBuf, int mmBufCnt)
     for (int idx = 0; idx < mmBufCnt; ++idx)
     {
         mmbuffer_t const &buf = *(mmBuf+idx);
+        std::cout << '[';
         std::copy(buf.ptr, buf.ptr + buf.size, std::ostream_iterator<char>(std::cout));
+        std::cout << ']';
     }
+    std::cout << "--";
     return 0;
 }
 
@@ -67,7 +70,7 @@ int main(int argc, char *argv[])
     f2.close();
 
     xpparam_t parms; parms.flags = 0;   //no flags
-    xdemitconf_t ctx; ctx.ctxlen = 3;
+    xdemitconf_t ctx; ctx.ctxlen = 0;   //no context, just difference
     xdemitcb_t cb; cb.priv = NULL; cb.outf = &outf;
     success = xdl_diff(&f1Mm, &f2Mm, &parms, &ctx, &cb);
     if (success != 0) { throw std::runtime_error("unable to generate diff between [" + f1.fileName().toStdString() + "] and [" + f2.fileName().toStdString() + ']'); }

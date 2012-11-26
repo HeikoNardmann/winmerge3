@@ -1,22 +1,25 @@
 #ifndef DIFFERENCEFILEPAIR_H
 #define DIFFERENCEFILEPAIR_H
 
-#include "differencefile.h"
+#include <QString>
 
-#include <boost/shared_ptr.hpp>
-#include <boost/utility.hpp>
+#include "comparison.h"
+#include "difference.h"
 
-class DifferenceFilePair : boost::noncopyable
+class DifferenceFilePair
 {
 public:
-    typedef boost::shared_ptr<DifferenceFilePair> holder_t;
-
-//    DifferenceFilePair(DifferenceFile::holder_t const &side1, DifferenceFile::holder_t const &side2);
-    DifferenceFilePair(QString const &side1FileName, QString const &side2FileName);
+    DifferenceFilePair(QString const &side1Name, QString const &side2Name);
     ~DifferenceFilePair();
 
+    QString GetFile1Name(void) const { return side1Name_; }
+    QString GetFile2Name(void) const { return side2Name_; }
+
+    Comparison DoCompare(void);
+    Difference CreateDifference(void);
+
 private:
-    DifferenceFile side1_, side2_;
+    QString side1Name_, side2Name_;
 };
 
 #endif // DIFFERENCEFILEPAIR_H

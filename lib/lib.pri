@@ -1,14 +1,19 @@
 # This file is included by the gui/gui.pro file
 
 HEADERS += $$PWD/dircompare.h \
-           $$PWD/filecompare.h \
            $$PWD/libxdiff_tools.h \
            $$PWD/resultitem.h \
-    ../lib/differencefile.h \
-    ../lib/differencefilepair.h
+    ../lib/difference.h \
+    ../lib/differenceblock.h \
+    ../lib/differenceline.h \
+    ../lib/differencefilepair.h \
+    ../lib/comparison.h \
+    ../lib/xdiffmmfile.h
 
 SOURCES += $$PWD/dircompare.cpp \
-           $$PWD/filecompare.cpp \
            $$PWD/libxdiff_tools.cpp \
-    ../lib/differencefile.cpp \
-    ../lib/differencefilepair.cpp
+    ../lib/difference.cpp \
+    ../lib/differenceblock.cpp \
+    ../lib/differenceline.cpp \
+    ../lib/differencefilepair.cpp \
+    ../lib/xdiffmmfile.cpp
