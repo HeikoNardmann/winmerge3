@@ -1,11 +1,13 @@
 #include <QList>
 #include <QDebug>
+
 #include "mainwindow.h"
 #include "opendialog.h"
 #include "openfilesdialog.h"
 #include "aboutdialog.h"
+
 #include "dircompare.h"
-#include "resultitem.h"
+#include "comparison.h"
 #include "libxdiff_tools.h"
 
 MainWindow::MainWindow()
@@ -31,7 +33,7 @@ void MainWindow::OpenDirs()
     {
         QString left = dlg.GetLeftItem();
         QString right = dlg.GetRightItem();
-        qDebug() << "Selected items: " << left << ", " << right;
+        qDebug() << "Selected items:" << left << ',' << right;
         DoDirCompare(left, right);
     }
 }
@@ -44,7 +46,7 @@ void MainWindow::OpenFiles()
     {
         QString left = dlg.GetLeftItem();
         QString right = dlg.GetRightItem();
-        qDebug() << "Selected items: " << left << ", " << right;
+        qDebug() << "Selected items:" << left << ',' << right;
     }
 }
 
@@ -52,17 +54,18 @@ void MainWindow::DoDirCompare(const QString &left, const QString &right)
 {
     DirCompare compare(left, right);
     compare.DoCompare();
-    QList<ResultItem> results = compare.GetResults();
+    QList<Comparison> results = compare.GetResults();
 
-    QList<ResultItem>::const_iterator iter = results.constBegin();
+    QList<Comparison>::const_iterator iter = results.constBegin();
     while (iter != results.constEnd())
     {
+        Comparison const &comparison = *iter;
         QString resStr;
-        if ((*iter).result == ResultItem::Different)
+        if (comparison.result == Comparison::Different)
             resStr = "Different";
         else
             resStr = "Identical";
-        qDebug() << "File: " << (*iter).name << " Result: " << resStr;
+        qDebug() << "file" << comparison.name1 << "and file" << comparison.name2 << "Result:" << resStr;
         ++iter;
     }
 }

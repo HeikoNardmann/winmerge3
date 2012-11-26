@@ -2,7 +2,7 @@
 #define DIRCOMPARE_H
 
 #include <QList>
-#include "resultitem.h"
+#include "comparison.h"
 
 #include <boost/scoped_ptr.hpp>
 #include <boost/utility.hpp>
@@ -17,13 +17,13 @@ public:
     ~DirCompare();
 
     void DoCompare();
-    QList<ResultItem> GetResults() const;
+    QList<Comparison> GetResults() const;
 
 private:
     typedef boost::scoped_ptr<QDir> qdir_holder_t;
     qdir_holder_t mDir1;
     qdir_holder_t mDir2;
-    QList<ResultItem> mResults;
+    QList<Comparison> mResults;
 };
 
 #endif // DIRCOMPARE_H

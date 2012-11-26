@@ -4,9 +4,10 @@
 #include <QList>
 #include <QStringList>
 #include <QtDebug>
+
 #include "dircompare.h"
-#include "filecompare.h"
-#include "resultitem.h"
+
+#include "differencefilepair.h"
 
 DirCompare::DirCompare(const QString &item1, const QString &item2)
     : mDir1(new QDir(item1))
@@ -33,9 +34,9 @@ void DirCompare::DoCompare()
     QFileInfoList::const_iterator iter2 = side2.constBegin();
     while (iter != side1.constEnd() && iter2 != side2.constEnd())
     {
-        const QFileInfo inf1 = *iter;
+        const QFileInfo &inf1 = *iter;
         const bool side1IsFile = inf1.isFile();
-        const QFileInfo inf2 = *iter2;
+        const QFileInfo &inf2 = *iter2;
         const bool side2IsFile = inf2.isFile();
 
         if (side1IsFile && side2IsFile)
@@ -43,8 +44,8 @@ void DirCompare::DoCompare()
             if (inf1.fileName() == inf2.fileName())
             {
                 qDebug() << "Comparing: " << inf1.fileName() << " and " << inf2.fileName();
-                FileCompare compare(inf1.absoluteFilePath(), inf2.absoluteFilePath());
-                ResultItem item = compare.Compare();
+                DifferenceFilePair pair(inf1.absoluteFilePath(), inf2.absoluteFilePath());
+                Comparison item = pair.DoCompare();
                 mResults << item;
                 ++iter;
                 ++iter2;
@@ -71,7 +72,7 @@ void DirCompare::DoCompare()
     }
 }
 
-QList<ResultItem> DirCompare::GetResults() const
+QList<Comparison> DirCompare::GetResults() const
 {
     return mResults;
 }
