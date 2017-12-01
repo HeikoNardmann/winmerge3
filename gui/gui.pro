@@ -1,5 +1,6 @@
 TEMPLATE = app
 TARGET = winmerge
+QT += widgets
 
 MOC_DIR = temp
 OBJECTS_DIR = temp
